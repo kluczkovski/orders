@@ -11,6 +11,12 @@
 		preserveHeaderStateOnScroll="true"
 		toggleHeaderOnTitleClick="false">
 		
+		<semantic:headerContent>
+			<Title
+				id="masterPageTitle"
+				text="{masterView>/title}"/>
+		</semantic:headerContent>
+		
 		<semantic:titleHeading>
 			<l:HorizontalLayout>
 				<f:Avatar
@@ -23,12 +29,6 @@
 			</l:HorizontalLayout>
 		</semantic:titleHeading>
 		
-		<semantic:headerContent>
-			<Title
-				id="masterPageTitle"
-				text="{masterView>/title}"/>
-		</semantic:headerContent>
-	
 		<semantic:content>
 			<!-- For client side filtering add this to the items attribute: parameters: {operationMode: 'Client'}}" -->
 			<List
@@ -38,8 +38,11 @@
 				items="{
 					path: '/SalesOrderSet',
 					sorter: {
-						path: 'CustomerName',
-						descending: false
+						path: 'CreatedAt',
+						descending: true
+					},
+					parameters: {
+						'expand': 'ToBusinessPartner'
 					},
 					groupHeaderFactory: '.createGroupHeader'
 				}"
@@ -50,6 +53,7 @@
 				growingScrollToLoad="true"
 				updateFinished=".onUpdateFinished"
 				selectionChange=".onSelectionChange">
+				
 				<infoToolbar>
 					<Toolbar
 						active="true"
@@ -58,10 +62,10 @@
 						press=".onOpenViewSettings">
 						<Title
 							id="filterBarLabel"
-							text="{masterView>/filterBarLabel}"
-							level="H3"/>
+							text="{masterView>/filterBarLabel}"/>
 					</Toolbar>
 				</infoToolbar>
+				
 				<headerToolbar>
 					<OverflowToolbar>
 						<SearchField
@@ -96,7 +100,9 @@
 							type="Transparent"/>
 					</OverflowToolbar>
 				</headerToolbar>
+				
 				<items>
+					
 					<ObjectListItem
 						type="Navigation"
 						press=".onSelectionChange"
@@ -106,6 +112,31 @@
 							formatter: '.formatter.currencyValue'
 						}"
 						numberUnit="{CurrencyCode}">
+						
+						<ObjectAttribute text="{
+							path: 'CreatedAt',
+							type: 'sap.ui.model.type.Date',
+							formatOptions: {
+								style: 'short'
+							}
+						}"/>
+						
+						<ObjectAttribute text="{ToBusinessPartner/BusinessPartnerID}"/>
+						
+						<firstStatus>
+							<ObjectStatus
+								title ="{ToBusinessPartner/Address/Country}"
+								text="{ToBusinessPartner/Address/City}"/>
+						</firstStatus>
+						
+						<markers>
+							<ObjectMarker type="{=
+								${ToBusinessPartner/Address/Country} === 'MX' &amp;&amp;
+								${ToBusinessPartner/Address/City} ==='Mexiko City'
+							 	? 'Favorite' : 'Flagged'
+							 }"/>
+						</markers>
+						
 					</ObjectListItem>
 				</items>
 			</List>
