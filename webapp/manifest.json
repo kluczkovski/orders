@@ -102,6 +102,8 @@
 					"name": "Info",
 					"pattern": "Info",
 					"target": [
+						"master",
+						"object",
 						"Info"
 					]
 				}

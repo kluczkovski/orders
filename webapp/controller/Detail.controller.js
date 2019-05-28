@@ -22,6 +22,7 @@ sap.ui.define([
 				lineItemListTitle: this.getResourceBundle().getText("detailLineItemTableHeading")
 			});
 			this.getRouter().getRoute("object").attachPatternMatched(this._onObjectMatched, this);
+			this.getRouter().getRoute("Info").attachPatternMatched(this._onObjectMatched, this);
 			this.setModel(oViewModel, "detailView");
 			this.getOwnerComponent().getModel().metadataLoaded().then(this._onMetadataLoaded.bind(this));
 		},
@@ -66,6 +67,12 @@ sap.ui.define([
 		 */
 		_onObjectMatched: function (oEvent) {
 			var sObjectId = oEvent.getParameter("arguments").objectId;
+			if (!sObjectId){
+				return;
+			}
+			if (oEvent.getParameter("name") === "object") {
+				this.getModel("appView").setProperty("/layout","TwoColumnsMidExpanded");
+			}
 			this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
 			this.getModel().metadataLoaded().then(function () {
 				var sObjectPath = this.getModel().createKey("SalesOrderSet", {

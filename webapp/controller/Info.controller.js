@@ -1,9 +1,9 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function (Controller) {
+	"./BaseController"
+], function (BaseController) {
 	"use strict";
 
-	return Controller.extend("opensap.orders.controller.Info", {
+	return BaseController.extend("opensap.orders.controller.Info", {
 
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
@@ -11,8 +11,12 @@ sap.ui.define([
 		 * @memberOf opensap.orders.view.Info
 		 */
 		onInit: function () {
-
+			this.getRouter().getRoute("Info").attachPatternMatched(this._onInfoMatched,this);
 		},
+		
+		_onInfoMatched: function (oEvent){
+			this.getModel("appView").setProperty("/layout", "ThreeColumnsMidExpanded");	
+		}
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

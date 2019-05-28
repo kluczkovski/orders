@@ -1,9 +1,14 @@
-<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="opensap.orders.controller.Info"
-	xmlns:html="http://www.w3.org/1999/xhtml">
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:html="http://www.w3.org/1999/xhtml" controllerName="opensap.orders.controller.Info">
 	<App>
 		<pages>
-			<Page title="Title">
-				<content></content>
+			<Page title="{i18n>infoTitle}">
+				<content>
+				    <List noDataText="Drop list items here" id="list0" items="{path:'/ProductSet',parameters:{select:'Name,ProductID'}}">
+				        <items>
+				            <StandardListItem type="Navigation" title="{Name}" description="{ProductID}" icon="sap-icon://picture" id="item0"/>
+				        </items>
+				    </List>
+				</content>
 			</Page>
 		</pages>
 	</App>

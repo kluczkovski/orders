@@ -9,7 +9,17 @@
 			<ObjectNumber id="objectHeaderNumber" number="{      path: 'NetAmount',      formatter: '.formatter.currencyValue'     }" unit="{CurrencyCode}"/>
 		</semantic:headerContent>
 		<semantic:content>
-			<Table id="lineItemsList" width="auto" items="{ToLineItems}" updateFinished=".onListUpdateFinished" noDataText="{i18n&gt;detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView&gt;/lineItemTableDelay}" selectionChange="action" xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" action:wiring="\{'selectionChange':\{'navigation':\{'routeName':'Info'\}\}\}">
+			<Table 
+				id="lineItemsList" 
+				width="auto" 
+				items="{ToLineItems}" 
+				mode="SingleSelectMaster"
+				updateFinished=".onListUpdateFinished" 
+				noDataText="{i18n&gt;detailLineItemTableNoDataText}" 
+				busyIndicatorDelay="{detailView&gt;/lineItemTableDelay}" 
+				selectionChange="action" 
+				xmlns:action="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1" 
+				action:wiring="\{'selectionChange':\{'navigation':\{'routeName':'Info'\}\}\}">
 				<headerToolbar>
 					<Toolbar>
 						<Title id="lineItemsTitle" text="{detailView&gt;/lineItemListTitle}" titleStyle="H3" level="H3"/>
